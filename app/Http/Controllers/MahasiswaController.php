@@ -31,6 +31,7 @@ class MahasiswaController extends Controller
             return response()->json([
                 'status' => true,
                 'data' => $mahasiswa,
+                'pesan' => "",
             ]);
         } catch (\Exception $e) {
             return response()->json([
