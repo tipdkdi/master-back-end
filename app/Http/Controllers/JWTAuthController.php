@@ -16,7 +16,7 @@ class JWTAuthController extends Controller
      */
     public function login(Request $request)
     {
-        return "ggwp";
+        // return "ggwp";
         $credentials = $request->only('email', 'password');
 
         try {
