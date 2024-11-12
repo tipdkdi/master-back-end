@@ -138,6 +138,7 @@ class PegawaiController extends Controller
                 'biodata_id' => $biodata->id,
                 'status_asn_id' => $request->status_asn_id,
                 'kategori_id' => $request->kategori_id,
+                'is_dosen' => $request->is_dosen,
             ]);
 
             // Commit transaksi jika semua berhasil
