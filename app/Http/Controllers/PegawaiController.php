@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Models\Biodata;
-use App\Http\Requests\pegawaiBiodataRequest; // Import pegawaiRequest
+use App\Http\Requests\PegawaiBiodataRequest; // Import pegawaiRequest
 use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
