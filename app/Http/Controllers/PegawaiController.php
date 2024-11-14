@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pegawai;
 use App\Models\Biodata;
 use App\Http\Requests\PegawaiBiodataRequest; // Import pegawaiRequest
+use App\Models\PegawaiJabatan;
 use Illuminate\Support\Facades\DB;
 
 class PegawaiController extends Controller
@@ -103,6 +104,15 @@ class PegawaiController extends Controller
                 'is_dosen' => $request->is_dosen,
             ]);
 
+            $jabatan = PegawaiJabatan::create([
+                'pegawai_id' => $pegawai->id,
+                'master_jabatan_id' => $request->master_jabatan_id,
+                'jabatan' => $request->jabatan,
+                'pangkat' => $request->pangkat,
+                'golongan' => $request->golongan,
+                'is_current' => $request->is_current,
+            ]);
+
             // Commit transaksi jika semua berhasil
             DB::commit();
 
@@ -110,7 +120,8 @@ class PegawaiController extends Controller
                 'status' => true,
                 'data' => [
                     'biodata' => $biodata,
-                    'pegawai' => $pegawai
+                    'pegawai' => $pegawai,
+                    'jabatan' => $jabatan
                 ],
                 'pesan' => 'Data berhasil disimpan.',
             ], 201);

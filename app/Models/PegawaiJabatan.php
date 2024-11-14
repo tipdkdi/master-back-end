@@ -12,7 +12,7 @@ class PegawaiJabatan extends Model
     //ini untuk jabatan fungsional. misalnya asisten_ahli, prakom, prahum, asriparis dll
     protected $fillable = [
         'pegawai_id',
-        'master_jafung_id',
+        'master_jabatan_id',
         'jabatan',
         'pangkat',
         'golongan',

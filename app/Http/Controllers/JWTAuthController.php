@@ -50,20 +50,17 @@ class JWTAuthController extends Controller
                 $status = false;
                 $message = 'Login gagal, email tidak terdaftar';
                 $data = [];
-                return response()->json([compact('status', 'message', 'data')], 401);
+                return response()->json(compact('status', 'message', 'data'), 401);
 
                 // return response()->json(['error' => 'Invalid credentials'], 401);
             }
 
             // Buat token dengan klaim khusus (contohnya `role` jika ada)
-            $token = JWTAuth::claims(['grup' => "admin_utama"])->fromUser($user);
+            $data['token'] = JWTAuth::claims(['grup' => "admin_utama"])->fromUser($user);
             $roles = $user->userRoles()->with('role')->get();
 
-            $grup = UserRoleResource::collection($roles);
-            $biodata = $user->biodata;
-            $data['token'] = $token;
-            $data['grup'] = $grup;
-            $data['biodata'] = $biodata;
+            $data['grup'] = UserRoleResource::collection($roles);
+            $data['biodata'] = $user->biodata;
             $status = true;
             $message = 'Login Berhasil';
             return response()->json(compact('status', 'message', 'data'));
