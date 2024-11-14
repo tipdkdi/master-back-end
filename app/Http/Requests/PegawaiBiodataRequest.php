@@ -29,11 +29,18 @@ class PegawaiBiodataRequest extends FormRequest
 
         // Aturan untuk Mahasiswa
         $pegawaiRules = [
-            'idpeg' => 'required|string|max:50',
+            'idpeg' => 'nullable|string|max:50',
             'pegawai_nomor_induk' => 'required|string|max:20|unique:pegawais,pegawai_nomor_induk,' . $pegawaiId,
             'status_asn_id' => 'required|exists:pegawai_status_asns,id', // Jika Anda memiliki tabel statuses
             'kategori_id' => 'required|exists:pegawai_kategoris,id', // Jika Anda memiliki tabel kategoris
             'is_dosen' => 'required|boolean',
+
+            'pegawai_id' => 'required',
+            'master_jafung_id' => 'required',
+            'jabatan' => 'required|string|max:50',
+            'pangkat' => 'required|string|max:50',
+            'golongan' => 'required|string|max:50',
+            'is_current' => 'required|boolean',
         ];
 
         // Aturan untuk Biodata

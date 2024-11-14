@@ -47,7 +47,12 @@ class JWTAuthController extends Controller
             $user = \App\Models\User::where('email', $credentials['email'])->first();
 
             if (!$user) {
-                return response()->json(['error' => 'Invalid credentials'], 401);
+                $status = false;
+                $message = 'Login gagal, email tidak terdaftar';
+                $data = [];
+                return response()->json([compact('status', 'message', 'data')], 401);
+
+                // return response()->json(['error' => 'Invalid credentials'], 401);
             }
 
             // Buat token dengan klaim khusus (contohnya `role` jika ada)
@@ -56,7 +61,12 @@ class JWTAuthController extends Controller
 
             $grup = UserRoleResource::collection($roles);
             $biodata = $user->biodata;
-            return response()->json(compact('token', 'grup', 'biodata'));
+            $data['token'] = $token;
+            $data['grup'] = $grup;
+            $data['biodata'] = $biodata;
+            $status = true;
+            $message = 'Login Berhasil';
+            return response()->json(compact('status', 'message', 'data'));
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
