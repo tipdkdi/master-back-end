@@ -59,11 +59,11 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('roles')->insert([
             [
-                'role_nama' => 'super_admin',
+                'role_nama' => 'Administrator',
                 'keterangan' => '',
             ],
             [
-                'role_nama' => 'pegawai',
+                'role_nama' => 'Pegawai',
                 'keterangan' => '',
             ],
         ]);
