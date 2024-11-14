@@ -21,6 +21,7 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
+        'biodata_id',
         'password',
     ];
 
@@ -59,10 +60,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function biodata()
     {
-        return $this->hasOne('App\Models\UserBiodata');
+        return $this->belongsTo('App\Models\Biodata');
     }
-    public function roles()
+    public function userRoles()
     {
-        return $this->hasOne('App\Models\UserRole');
+        return $this->hasMany('App\Models\UserRole');
     }
 }

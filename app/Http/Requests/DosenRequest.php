@@ -29,6 +29,7 @@ class DosenRequest extends FormRequest
             // 'nomor_dosen' => 'required|string|max:50|unique:pegawai_dosens,nomor_dosen,' . $pegawaiDosenId,
             'nomor_dosen' => 'required|string|max:50|unique:dosens,nomor_dosen,' . $dosenId,
             'dosen_kategori' => 'required|string|in:tetap,honorer',
+            'homebase' => 'required',
         ];
     }
 
@@ -42,6 +43,7 @@ class DosenRequest extends FormRequest
             'nomor_dosen.unique' => 'Nomor dosen sudah terdaftar.',
             'dosen_kategori.required' => 'Kategori dosen wajib diisi.',
             'dosen_kategori.in' => 'Kategori dosen harus tetap atau honorer.',
+            'homebase.required' => 'Homebase dosen wajib diisi.',
         ];
     }
 

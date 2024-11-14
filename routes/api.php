@@ -14,6 +14,7 @@ use App\Http\Controllers\DosenController;
 use App\Http\Controllers\DosenPenugasanController;
 use App\Http\Controllers\GrupJabatanController;
 use App\Http\Controllers\OrganisasiPejabatController;
+use App\Http\Controllers\LainnyaController;
 use App\Http\Middleware\JwtMiddleware;
 
 // Route::get('/user', function (Request $request) {
@@ -82,4 +83,9 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('pejabat/{id}', [OrganisasiPejabatController::class, 'show'])->name('pejabat.show');
     Route::put('pejabat/{id}', [OrganisasiPejabatController::class, 'update'])->name('pejabat.update');
     Route::delete('pejabat/{id}', [OrganisasiPejabatController::class, 'destroy'])->name('pejabat.destroy');
+
+
+    Route::get('status-asn', [LainnyaController::class, 'statusAsn'])->name('status.asn');
+    Route::get('kategori-pegawai', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
+    Route::get('decrypt', [LainnyaController::class, 'decrypt'])->name('decrypt');
 });

@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('pegawai_id');
             $table->foreign('pegawai_id')->references('id')->on('pegawais');
 
-            $table->unsignedBigInteger('master_jafung_id')->nullable();
-            $table->foreign('master_jafung_id')->references('id')->on('master_jafungs');
+            $table->unsignedBigInteger('master_jabatan_id')->nullable();
+            $table->foreign('master_jabatan_id')->references('id')->on('master_jabatans');
 
             $table->string('jabatan');
             $table->string('pangkat');

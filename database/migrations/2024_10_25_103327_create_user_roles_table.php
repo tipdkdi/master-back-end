@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('user_roles', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('role_id');
+            $table->foreign('role_id')->references('id')->on('roles');
+
+            $table->boolean('is_default')->default(false);
+            $table->boolean('is_active')->default(true);
+
             $table->timestamps();
         });
     }

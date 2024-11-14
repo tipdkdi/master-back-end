@@ -9,7 +9,7 @@ class DosenController extends Controller
 {
     public function index()
     {
-        $data = Dosen::with('pegawai')->paginate(10);
+        $data = Dosen::with('pegawai.biodata')->paginate(10);
         return response()->json([
             'status' => true,
             'data' => $data,

@@ -20,10 +20,72 @@ class DatabaseSeeder extends Seeder
         $fuad = "Fakultas Ushuluddin Adab dan Dakwah";
         $pascasarjana = "Pascasarjana";
 
+        DB::table('biodatas')->insert([
+            [
+                'nik' => '1234567890123456',
+                'nama_lengkap' => 'Budi Santoso',
+                'jenis_kelamin' => 'L',
+                'lahir_tempat' => 'Jakarta',
+                'lahir_tanggal' => '1990-01-01',
+                'no_hp' => '081234567890',
+                'agama' => 'islam',
+                'alamat_domisili' => 'Jl. Merdeka No. 123, Jakarta',
+            ],
+            [
+                'nik' => '734567890123456',
+                'nama_lengkap' => 'Wahyu',
+                'jenis_kelamin' => 'L',
+                'lahir_tempat' => 'Jakarta',
+                'lahir_tanggal' => '1990-01-01',
+                'no_hp' => '081234567890',
+                'agama' => 'islam',
+                'alamat_domisili' => 'Jl. Merdeka No. 123, Jakarta',
+            ],
+        ]);
+
         DB::table('users')->insert([
-            'name' => 'super_admin',
-            'email' => 'super_admin@iainkendari.ac.id',
-            'password' => bcrypt('1234qwer'),
+            [
+                'biodata_id' => 1,
+                'name' => 'super_admin',
+                'email' => 'super_admin@iainkendari.ac.id',
+                'password' => bcrypt('1234qwer'),
+            ],
+            [
+                'biodata_id' => 2,
+                'name' => 'Eko Wahyu',
+                'email' => 'ewp@iainkendari.ac.id',
+                'password' => bcrypt('1234qwer'),
+            ]
+        ]);
+        DB::table('roles')->insert([
+            [
+                'role_nama' => 'super_admin',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'pegawai',
+                'keterangan' => '',
+            ],
+        ]);
+        DB::table('user_roles')->insert([
+            [
+                'user_id' => 1,
+                'role_id' => 1,
+                'is_default' => 1,
+                'is_active' => 1,
+            ],
+            [
+                'user_id' => 2,
+                'role_id' => 1,
+                'is_default' => 1,
+                'is_active' => 1,
+            ],
+            [
+                'user_id' => 2,
+                'role_id' => 2,
+                'is_default' => 0,
+                'is_active' => 1,
+            ],
         ]);
         DB::table('organisasi_grups')->insert([
             [
@@ -614,6 +676,9 @@ class DatabaseSeeder extends Seeder
             ['asn_nama' => 'Pegawai Negeri Sipil', "singkatan" => "PNS", 'is_asn' => true, 'sebutan_nomor_induk' => 'NIP'],
             ['asn_nama' => 'Pegawai Pemerintah dengan Perjanjian Kerja', "singkatan" => "PPPK", 'is_asn' => true, 'sebutan_nomor_induk' => 'NI PPPK'],
             ['asn_nama' => 'Non-ASN', "singkatan" => "Non-ASN", 'is_asn' => false, 'sebutan_nomor_induk' => 'Nomor Pegawai'],
+        ]);
+        DB::table('master_jabatans')->insert([
+            ['jabatan' => 'Pranata Komputer', 'is_dosen' => false, 'keterangan' => 'Prakom'],
         ]);
         DB::table('pegawai_kategoris')->insert([
             [

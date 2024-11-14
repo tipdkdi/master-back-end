@@ -27,7 +27,7 @@ class PegawaiController extends Controller
                     ->with(['biodata', 'dosen', 'statusAsn', 'kategori'])
                     ->where('is_dosen', 1)
                     ->paginate($paging);
-            else if ($kategori == "pegawai")
+            else if ($kategori == "non_dosen")
                 $pegawai = Pegawai::with('biodata')
                     ->when($search, function ($query, $search) {
                         return $query->whereHas('biodata', function ($query) use ($search) {
@@ -61,7 +61,21 @@ class PegawaiController extends Controller
         }
     }
 
-
+    public function show($id)
+    {
+        try {
+            $pegawai = Pegawai::with('biodata')->find($id);
+            return response()->json([
+                'status' => true,
+                'data' => $pegawai,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
     public function store(PegawaiBiodataRequest $request)
     {
         DB::beginTransaction();

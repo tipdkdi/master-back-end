@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_biodatas', function (Blueprint $table) {
+        Schema::create('master_jabatans', function (Blueprint $table) {
             $table->id();
+            $table->string('jabatan');
+            $table->boolean('is_dosen')->default(false);
+            $table->text('keterangan');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_biodatas');
+        Schema::dropIfExists('master_jabatans');
     }
 };

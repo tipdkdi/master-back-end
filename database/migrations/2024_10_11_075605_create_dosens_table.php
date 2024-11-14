@@ -18,6 +18,8 @@ return new class extends Migration
 
             $table->string('nomor_dosen'); //NIDK / NUPTK
             $table->enum('dosen_kategori', ['tetap', 'lb', 'tidak tetap']);
+            $table->unsignedBigInteger('homebase'); //ambil dari organisasi id yang flagnya prodi
+            $table->foreign('homebase')->references('id')->on('organisasis')->onDelete('cascade');
             $table->timestamps();
         });
     }

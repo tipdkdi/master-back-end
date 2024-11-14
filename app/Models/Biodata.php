@@ -20,6 +20,10 @@ class Biodata extends Model
         'alamat_domisili',
     ];
 
+    public function user()
+    {
+        return $this->hasOne('App\Models\User');
+    }
     public function mahasiswa()
     {
         return $this->hasOne('App\Models\Mahasiswa');

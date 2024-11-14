@@ -8,29 +8,55 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
+use App\Http\Resources\UserRoleResource;
 
 class JWTAuthController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    // public function login(Request $request)
+    // {
+    //     // return "ggwp";
+    //     $credentials = $request->only('email');
+
+    //     try {
+    //         if (! $token = JWTAuth::attempt($credentials)) {
+    //             return response()->json(['error' => 'Invalid credentials'], 401);
+    //         }
+
+    //         // Get the authenticated user.
+    //         $user = auth()->user();
+
+    //         // (optional) Attach the role to the token.
+    //         $token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
+
+    //         return response()->json(compact('token'));
+    //     } catch (JWTException $e) {
+    //         return response()->json(['error' => 'Could not create token'], 500);
+    //     }
+    // }
     public function login(Request $request)
     {
-        // return "ggwp";
-        $credentials = $request->only('email', 'password');
+        // Ambil hanya `email` dari request
+
+        $credentials = $request->only('email');
 
         try {
-            if (! $token = JWTAuth::attempt($credentials)) {
+            // Cari user berdasarkan email tanpa mengecek password
+            $user = \App\Models\User::where('email', $credentials['email'])->first();
+
+            if (!$user) {
                 return response()->json(['error' => 'Invalid credentials'], 401);
             }
 
-            // Get the authenticated user.
-            $user = auth()->user();
+            // Buat token dengan klaim khusus (contohnya `role` jika ada)
+            $token = JWTAuth::claims(['grup' => "admin_utama"])->fromUser($user);
+            $roles = $user->userRoles()->with('role')->get();
 
-            // (optional) Attach the role to the token.
-            $token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
-
-            return response()->json(compact('token'));
+            $grup = UserRoleResource::collection($roles);
+            $biodata = $user->biodata;
+            return response()->json(compact('token', 'grup', 'biodata'));
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
