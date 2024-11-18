@@ -87,5 +87,6 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 
     Route::get('status-asn', [LainnyaController::class, 'statusAsn'])->name('status.asn');
     Route::get('kategori-pegawai', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
-    Route::get('decrypt', [LainnyaController::class, 'decrypt'])->name('decrypt');
+    Route::get('master-jabatan', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
+    // Route::get('decrypt', [LainnyaController::class, 'decrypt'])->name('decrypt');
 });
