@@ -36,7 +36,7 @@ class PegawaiBiodataRequest extends FormRequest
             'is_dosen' => 'required|boolean',
 
             'pegawai_id' => 'required',
-            'master_jafung_id' => 'required',
+            'master_jabatan_id' => 'required',
             'jabatan' => 'required|string|max:50',
             'pangkat' => 'required|string|max:50',
             'golongan' => 'required|string|max:50',

@@ -21,6 +21,10 @@ class Pegawai extends Model
     {
         return $this->hasOne('App\Models\Dosen');
     }
+    public function jabatan()
+    {
+        return $this->hasOne('App\Models\PegawaiJabatan');
+    }
     public function pejabat()
     {
         return $this->hasMany('App\Models\OrganisasiPejabat');

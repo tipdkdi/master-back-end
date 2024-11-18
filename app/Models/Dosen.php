@@ -12,6 +12,7 @@ class Dosen extends Model
         'pegawai_id',
         'nomor_dosen',
         'dosen_kategori',
+        'homebase',
     ];
 
     public function pegawai()

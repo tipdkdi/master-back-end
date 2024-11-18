@@ -67,6 +67,7 @@ class DatabaseSeeder extends Seeder
                 'keterangan' => '',
             ],
         ]);
+
         DB::table('user_roles')->insert([
             [
                 'user_id' => 1,
@@ -857,6 +858,19 @@ class DatabaseSeeder extends Seeder
                 "pendapatan" => ">= Rp. 5.000.000",
                 "pddikti_id" => "15"
             ]
+        ]);
+
+        DB::table('master_jabatans')->insert([
+            [
+                'jabatan' => 'Pranata Komputer',
+                'is_dosen' => 0,
+                'keterangan' => '',
+            ],
+            [
+                'jabatan' => 'Pranata Humas',
+                'is_dosen' => 0,
+                'keterangan' => '',
+            ],
         ]);
     }
 }
