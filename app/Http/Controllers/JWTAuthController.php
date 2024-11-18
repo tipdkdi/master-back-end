@@ -60,7 +60,7 @@ class JWTAuthController extends Controller
             $roles = $user->userRoles()->with('role')->get();
 
             $data['grup'] = UserRoleResource::collection($roles);
-            $data['biodata'] = $user->biodata;
+            $data['biodata'] = $user->userBiodata->biodata;
             $status = true;
             $message = 'Login Berhasil';
             return response()->json(compact('status', 'message', 'data'));

@@ -45,16 +45,50 @@ class DatabaseSeeder extends Seeder
 
         DB::table('users')->insert([
             [
-                'biodata_id' => 1,
+                'tahun' => '2024',
+                'semester' => 'Ganjil',
+                'sebutan' => '2024/2025 Ganjil',
+                'kode' => '20241',
+            ],
+            [
+                'tahun' => '2024',
+                'semester' => 'Genap',
+                'sebutan' => '2024/2025 Genap',
+                'kode' => '20242',
+            ],
+            [
+                'tahun' => '2025',
+                'semester' => 'Ganjil',
+                'sebutan' => '2025/2026 Ganjil',
+                'kode' => '20251',
+            ],
+            [
+                'tahun' => '2025',
+                'semester' => 'Genap',
+                'sebutan' => '2025/2026 Genap',
+                'kode' => '20252',
+            ],
+        ]);
+        DB::table('users')->insert([
+            [
                 'name' => 'super_admin',
                 'email' => 'super_admin@iainkendari.ac.id',
                 'password' => bcrypt('1234qwer'),
             ],
             [
-                'biodata_id' => 2,
                 'name' => 'Eko Wahyu',
                 'email' => 'ewp@iainkendari.ac.id',
                 'password' => bcrypt('1234qwer'),
+            ]
+        ]);
+        DB::table('user_biodatas')->insert([
+            [
+                'user_id' => 1,
+                'biodata_id' => 1,
+            ],
+            [
+                'user_id' => 2,
+                'biodata_id' => 2,
             ]
         ]);
         DB::table('roles')->insert([

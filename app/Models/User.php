@@ -58,9 +58,9 @@ class User extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function biodata()
+    public function userBiodata()
     {
-        return $this->belongsTo('App\Models\Biodata');
+        return $this->hasOne('App\Models\UserBiodata');
     }
     public function userRoles()
     {

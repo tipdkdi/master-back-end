@@ -11,14 +11,18 @@ class MahasiswaJalurMasuk extends Model
 
     protected $fillable = [
         'mahasiswa_id',
+        'tahun_akademik_id',
         'jalur_pendaftaran',
         'jenis_pendaftaran',
         'tanggal_masuk',
-        'periode_pendaftaran',
         'pembiayaan_awal',
         'biaya_masuk',
     ];
 
+    public function tahunAkademik()
+    {
+        return $this->belongsTo('App\Models\TahunAkademik');
+    }
     public function mahasiswa()
     {
         return $this->belongsTo('App\Models\Mahasiswa');
