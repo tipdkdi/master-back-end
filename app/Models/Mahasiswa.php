@@ -30,4 +30,8 @@ class Mahasiswa extends Model
     {
         return $this->hasOne('App\Models\MahasiswaOrangTua');
     }
+    public function jalurMasuk()
+    {
+        return $this->hasMany('App\Models\MahasiswaJalurMasuk');
+    }
 }

@@ -31,11 +31,12 @@ class PegawaiBiodataRequest extends FormRequest
         $pegawaiRules = [
             'idpeg' => 'nullable|string|max:50',
             'pegawai_nomor_induk' => 'required|string|max:20|unique:pegawais,pegawai_nomor_induk,' . $pegawaiId,
+            'gelar_depan' => 'nullable|string|max:255',
+            'gelar_belakang' => 'nullable|string|max:255',
             'status_asn_id' => 'required|exists:pegawai_status_asns,id', // Jika Anda memiliki tabel statuses
             'kategori_id' => 'required|exists:pegawai_kategoris,id', // Jika Anda memiliki tabel kategoris
             'is_dosen' => 'required|boolean',
 
-            'pegawai_id' => 'required',
             'master_jabatan_id' => 'required',
             'jabatan' => 'required|string|max:50',
             'pangkat' => 'required|string|max:50',

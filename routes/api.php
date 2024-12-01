@@ -16,15 +16,10 @@ use App\Http\Controllers\GrupJabatanController;
 use App\Http\Controllers\OrganisasiPejabatController;
 use App\Http\Controllers\LainnyaController;
 use App\Http\Middleware\JwtMiddleware;
-
-// Route::get('/user', function (Request $request) {
-//     return $request->user();
-// })->middleware('auth:sanctum');
-
+use Laravel\Socialite\Facades\Socialite;
 
 Route::post('login', [JWTAuthController::class, 'login']);
-
-// Route::resource('biodata', BiodataController::class);
+Route::post('validate-token', [JWTAuthController::class, 'validateToken']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::resource('mahasiswa', MahasiswaController::class)->parameters([
@@ -34,25 +29,28 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         'pegawai' => 'pegawai_id'
     ]);
 
-    Route::resource('dosen', DosenController::class)->parameters([
-        'dosen' => 'dosen_id'
-    ]);
-    Route::put('dosen/{dosen_id}/penugasan', [DosenPenugasanController::class, 'updateByDosenId']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::delete('dosen/{dosen_id}/penugasan', [DosenPenugasanController::class, 'destroy']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::resource('dosen.penugasan', DosenPenugasanController::class)->parameters([
-        'penugasan' => 'penugasan_id'
-    ]);
+    Route::resource('dosen', DosenController::class);
+    // Route::put('dosen/{dosen_id}/penugasan', [DosenPenugasanController::class, 'updateByDosenId']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
+    // Route::delete('dosen/{dosen_id}/penugasan', [DosenPenugasanController::class, 'destroy']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
+    // Route::resource('dosen.penugasan', DosenPenugasanController::class)->parameters([
+    //     'penugasan' => 'penugasan_id'
+    // ]);
 
-    Route::put('mahasiswa/{mahasiswa}/orang_tua', [MahasiswaOrtuController::class, 'updateByMahasiswaId']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::resource('mahasiswa.orang_tua', MahasiswaOrtuController::class);
+    //DOSEN PENUGASAN
+    Route::get('dosen/{dosen}/penugasan', [DosenPenugasanController::class, 'index']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
+    Route::resource('penugasan-dosen', DosenPenugasanController::class);
 
-    Route::put('mahasiswa/{mahasiswa}/jalur_masuk', [MahasiswaJalurMasukController::class, 'updateByMahasiswaId']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::delete('mahasiswa/{mahasiswa_id}/jalur_masuk', [MahasiswaJalurMasukController::class, 'destroy']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::resource('mahasiswa.jalur_masuk', MahasiswaJalurMasukController::class);
+    //MAHASISWA ORANG TUA
+    Route::get('mahasiswa/{mahasiswa}/orang-tua', [MahasiswaOrtuController::class, 'index']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
+    Route::resource('orang-tua', MahasiswaOrtuController::class);
 
-    Route::put('mahasiswa/{mahasiswa}/prestasi', [MahasiswaPrestasiController::class, 'updateByMahasiswaId']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::delete('mahasiswa/{mahasiswa_id}/prestasi', [MahasiswaPrestasiController::class, 'destroy']); //dipisah dari resource agar bisa tetap konsisten mahasiswa/id/orang_tua
-    Route::resource('mahasiswa.prestasi', MahasiswaPrestasiController::class);
+    //PRESTASI JALUR MASUK
+    Route::get('/mahasiswa/{mahasiswa}/jalur-masuk', [MahasiswaJalurMasukController::class, 'index']);
+    Route::resource('jalur-masuk', MahasiswaJalurMasukController::class)->except(['index']);
+
+    //PRESTASI MAHASISWA
+    Route::get('/mahasiswa/{mahasiswa}/prestasi', [MahasiswaPrestasiController::class, 'index']);
+    Route::resource('prestasi-mahasiswa', MahasiswaPrestasiController::class)->except(['index']);
 
     Route::resource('organisasi-grup', OrganisasiGrupController::class)->parameters([
         'organisasi-grup' => 'organisasi_grup_id'
@@ -87,6 +85,6 @@ Route::middleware([JwtMiddleware::class])->group(function () {
 
     Route::get('status-asn', [LainnyaController::class, 'statusAsn'])->name('status.asn');
     Route::get('kategori-pegawai', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
-    Route::get('master-jabatan', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
+    Route::get('master-jabatan', [LainnyaController::class, 'masterJabatan'])->name('kategori.pegawai');
     // Route::get('decrypt', [LainnyaController::class, 'decrypt'])->name('decrypt');
 });

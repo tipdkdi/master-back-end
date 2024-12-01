@@ -133,6 +133,7 @@ class PegawaiController extends Controller
             $pegawai = Pegawai::with('biodata')->find($id);
             return response()->json([
                 'status' => true,
+                'pesan' => "Data ditemukan",
                 'data' => $pegawai,
             ]);
         } catch (\Exception $e) {
@@ -163,6 +164,8 @@ class PegawaiController extends Controller
             $pegawai = Pegawai::create([
                 'idpeg' => $request->idpeg,
                 'pegawai_nomor_induk' => $request->pegawai_nomor_induk,
+                'gelar_depan' => $request->gelar_depan,
+                'gelar_belakang' => $request->gelar_belakang,
                 'biodata_id' => $biodata->id,
                 'status_asn_id' => $request->status_asn_id,
                 'kategori_id' => $request->kategori_id,
@@ -225,6 +228,8 @@ class PegawaiController extends Controller
             $pegawai->update([
                 'idpeg' => $request->idpeg,
                 'pegawai_nomor_induk' => $request->pegawai_nomor_induk,
+                'gelar_depan' => $request->gelar_depan,
+                'gelar_belakang' => $request->gelar_belakang,
                 'biodata_id' => $biodata->id,
                 'status_asn_id' => $request->status_asn_id,
                 'kategori_id' => $request->kategori_id,
@@ -259,6 +264,28 @@ class PegawaiController extends Controller
             return response()->json([
                 'status' => false,
                 'pesan' => 'Terjadi kesalahan: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            // $jalurMasuk = MahasiswaPrestasi::findOrFail($id);
+            $data = PegawaiJabatan::where('pegawai_id', $id);
+            $data->delete();
+
+            $data = Pegawai::findOrFail($id);
+            $data->delete();
+            return response()->json([
+                'status' => true,
+                'pesan' => 'Data berhasil dihapus.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan saat menghapus data.',
+                'error' => $e->getMessage(),
             ], 500);
         }
     }

@@ -61,17 +61,14 @@ class MahasiswaJalurMasukController extends Controller
     }
 
     // UPDATE: Update mahasiswa jalur masuk
-    public function updateByMahasiswaId(MahasiswaJalurMasukRequest $request, $id) // Use the custom request
+    public function update(MahasiswaJalurMasukRequest $request, $id) // Use the custom request
     {
         try {
-            // $jalurMasuk = MahasiswaJalurMasuk::findOrFail($id);
-            $jalurMasuk = MahasiswaJalurMasuk::where('mahasiswa_id', $id)->firstOrFail();
-
-            $jalurMasuk->update($request->validated());
-
+            $data = MahasiswaJalurMasuk::findOrFail($id);
+            $data->update($request->validated());
             return response()->json([
                 'status' => true,
-                'data' => $jalurMasuk,
+                'data' => $data,
                 'pesan' => 'Data berhasil diupdate.',
             ], 200);
         } catch (\Exception $e) {
@@ -87,8 +84,8 @@ class MahasiswaJalurMasukController extends Controller
     public function destroy($id)
     {
         try {
-            $jalurMasuk = MahasiswaJalurMasuk::where('mahasiswa_id', $id)->firstOrFail();
-            $jalurMasuk->delete();
+            $data = MahasiswaJalurMasuk::findOrFail($id);
+            $data->delete();
 
             return response()->json([
                 'status' => true,

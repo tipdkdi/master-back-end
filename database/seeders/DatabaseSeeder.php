@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             ],
         ]);
 
-        DB::table('users')->insert([
+        DB::table('tahun_akademiks')->insert([
             [
                 'tahun' => '2024',
                 'semester' => 'Ganjil',
@@ -93,11 +93,55 @@ class DatabaseSeeder extends Seeder
         ]);
         DB::table('roles')->insert([
             [
-                'role_nama' => 'Administrator',
+                'role_nama' => 'Administrator Utama',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Administrator SPMB',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Mahasiswa',
                 'keterangan' => '',
             ],
             [
                 'role_nama' => 'Pegawai',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Panitia SPMB',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Verifikator UKT',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Admin PNBP',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Admin Akademik',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Admin Prodi',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Dosen',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Kaprodi',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Dekan',
+                'keterangan' => '',
+            ],
+            [
+                'role_nama' => 'Admin PDDIKTI',
                 'keterangan' => '',
             ],
         ]);

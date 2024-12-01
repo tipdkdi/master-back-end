@@ -12,10 +12,10 @@ class MahasiswaPrestasiController extends Controller
     {
         try {
             // Get jalur masuk for the specified mahasiswa_id
-            $jalurMasuk = MahasiswaPrestasi::where('mahasiswa_id', $mahasiswa_id)->get();
+            $data = MahasiswaPrestasi::where('mahasiswa_id', $mahasiswa_id)->get();
 
             // Check if jalur masuk exists
-            if ($jalurMasuk->isEmpty()) {
+            if ($data->isEmpty()) {
                 return response()->json([
                     'status' => false,
                     'data' => null,
@@ -25,7 +25,7 @@ class MahasiswaPrestasiController extends Controller
 
             return response()->json([
                 'status' => true,
-                'data' => $jalurMasuk,
+                'data' => $data,
                 'pesan' => 'Data berhasil diambil.',
             ], 200);
         } catch (\Exception $e) {
@@ -42,11 +42,11 @@ class MahasiswaPrestasiController extends Controller
     {
         try {
             // Data already validated by the request
-            $jalurMasuk = MahasiswaPrestasi::create($request->validated());
+            $data = MahasiswaPrestasi::create($request->validated());
 
             return response()->json([
                 'status' => true,
-                'data' => $jalurMasuk,
+                'data' => $data,
                 'pesan' => 'Data berhasil disimpan.',
             ], 201);
         } catch (\Exception $e) {
@@ -57,19 +57,36 @@ class MahasiswaPrestasiController extends Controller
             ], 500);
         }
     }
-
-    // UPDATE: Update mahasiswa jalur masuk
-    public function updateByMahasiswaId(MahasiswaPrestasiRequest $request, $id) // Use the custom request
+    public function show($id)
     {
         try {
-            // $jalurMasuk = MahasiswaJalurMasuk::findOrFail($id);
-            $jalurMasuk = MahasiswaPrestasi::where('mahasiswa_id', $id)->firstOrFail();
-
-            $jalurMasuk->update($request->validated());
+            // Get jalur masuk for the specified mahasiswa_id
+            $data = MahasiswaPrestasi::findOrFail($id);
 
             return response()->json([
                 'status' => true,
-                'data' => $jalurMasuk,
+                'data' => $data,
+                'pesan' => 'Data berhasil diambil.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Gagal mengambil data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    // UPDATE: Update mahasiswa jalur masuk
+    public function update(MahasiswaPrestasiRequest $request, $id) // Use the custom request
+    {
+        try {
+            // $jalurMasuk = MahasiswaJalurMasuk::findOrFail($id);
+            // $jalurMasuk = MahasiswaPrestasi::where('mahasiswa_id', $id)->firstOrFail();
+            $data = MahasiswaPrestasi::findOrFail($id);
+            $data->update($request->validated());
+            return response()->json([
+                'status' => true,
+                'data' => $data,
                 'pesan' => 'Data berhasil diupdate.',
             ], 200);
         } catch (\Exception $e) {
@@ -86,10 +103,8 @@ class MahasiswaPrestasiController extends Controller
     {
         try {
             // $jalurMasuk = MahasiswaPrestasi::findOrFail($id);
-            $jalurMasuk = MahasiswaPrestasi::where('mahasiswa_id', $id)->firstOrFail();
-
-            $jalurMasuk->delete();
-
+            $data = MahasiswaPrestasi::findOrFail($id);
+            $data->delete();
             return response()->json([
                 'status' => true,
                 'pesan' => 'Data berhasil dihapus.',

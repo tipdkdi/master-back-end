@@ -12,6 +12,8 @@ class Pegawai extends Model
         'idpeg',
         'pegawai_nomor_induk',
         'biodata_id',
+        'gelar_depan',
+        'gelar_belakang',
         'status_asn_id',
         'kategori_id',
         'is_dosen',

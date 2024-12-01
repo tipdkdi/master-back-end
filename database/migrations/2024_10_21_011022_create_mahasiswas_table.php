@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreign('prodi_id')->references('id')->on('organisasis');
 
             $table->boolean('is_luar_negeri')->default(false);
+            $table->boolean('is_disabilitas')->default(false);
 
             $table->timestamps();
         });

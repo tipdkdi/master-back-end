@@ -28,7 +28,7 @@ class MahasiswaJalurMasukRequest extends FormRequest
             'jalur_pendaftaran' => 'required|string|max:255',
             'jenis_pendaftaran' => 'required|string|max:255',
             'tanggal_masuk' => 'required|date',
-            'periode_pendaftaran' => 'required|string|max:255',
+            'tahun_akademik_id' => 'required|exists:tahun_akademiks,id',
             'pembiayaan_awal' => 'required|string|max:255',
             'biaya_masuk' => 'required|string|max:255',
         ];

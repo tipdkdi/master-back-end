@@ -57,6 +57,24 @@ class OrganisasiGrupController extends Controller
             ], 500);
         }
     }
+    public function show($id) // Use the custom request
+    {
+        try {
+            $data = OrganisasiGrup::findOrFail($id);
+
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'pesan' => 'Data berhasil disimpan.',
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan saat menyimpan data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 
     // UPDATE: Update mahasiswa jalur masuk
     public function update(OrganisasiGrupRequest $request, $id) // Use the custom request

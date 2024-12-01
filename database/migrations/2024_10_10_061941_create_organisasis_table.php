@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('organisasi_nama', 200);
             $table->string('pddikti_kode')->nullable();
             $table->string('singkatan', 200);
-            $table->string('singkatan_sia', 200); //untuk sementara sampai data sia semua sudah pindah
+            $table->string('singkatan_sia', 200)->nullable(); //untuk sementara sampai data sia semua sudah pindah
             $table->text('keterangan')->nullable();
             $table->integer('urutan');
             $table->boolean('is_current')->nullable()->default(true);

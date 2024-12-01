@@ -9,33 +9,58 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
 use App\Http\Resources\UserRoleResource;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
 
 class JWTAuthController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    // public function login(Request $request)
-    // {
-    //     // return "ggwp";
-    //     $credentials = $request->only('email');
+    public function callbackGoogle() //google mengarahkan ke sini ketika login google berhasil
+    {
+        $googleUser = Socialite::driver('google')->stateless()->user();
+        dd($googleUser);
+        // Simpan atau update user
+        $user = User::updateOrCreate(
+            ['email' => $googleUser->email],
+            [
+                'name' => $googleUser->name,
+                'google_id' => $googleUser->id,
+                'password' => bcrypt('1234qwer'),
+                'photo' => $googleUser->avatar,
+            ]
+        );
 
-    //     try {
-    //         if (! $token = JWTAuth::attempt($credentials)) {
-    //             return response()->json(['error' => 'Invalid credentials'], 401);
-    //         }
+        // Generate JWT token
+        $token = JWTAuth::fromUser($user);
+        return redirect('https://portal.iainkendari.ac.id/token/' . $token);
+        // Return token ke aplikasi frontend
+        // return response()->json([
+        //     'message' => 'Login berhasil',
+        //     'token' => $token,
+        //     'user' => $user,
+        // ]);
+    }
 
-    //         // Get the authenticated user.
-    //         $user = auth()->user();
+    public function validateToken() //fungsi untuk validasi token
+    {
+        try {
+            // Verifikasi token
+            $user = Auth::guard('api')->user();
 
-    //         // (optional) Attach the role to the token.
-    //         $token = JWTAuth::claims(['role' => $user->role])->fromUser($user);
+            if (!$user) {
+                return response()->json(['error' => 'Token tidak valid'], 401);
+            }
 
-    //         return response()->json(compact('token'));
-    //     } catch (JWTException $e) {
-    //         return response()->json(['error' => 'Could not create token'], 500);
-    //     }
-    // }
+            return response()->json([
+                'message' => 'Token valid',
+                'user' => $user,
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Token tidak valid atau expired'], 401);
+        }
+    }
     public function login(Request $request)
     {
         // Ambil hanya `email` dari request

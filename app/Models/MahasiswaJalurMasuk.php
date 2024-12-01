@@ -17,6 +17,7 @@ class MahasiswaJalurMasuk extends Model
         'tanggal_masuk',
         'pembiayaan_awal',
         'biaya_masuk',
+        'is_current',
     ];
 
     public function tahunAkademik()

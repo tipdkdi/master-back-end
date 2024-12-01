@@ -10,17 +10,26 @@ class DosenPenugasanController extends Controller
 {
     public function index($id)
     {
-        // $dosenId = $request->input('dosen_id');
-        // if ($dosenId)
-        $data = DosenPenugasan::where('dosen_id', $id)->first();
-        // if ($dosenId)
-        //     $data = DosenPenugasan::where('dosen_id', $dosenId)->get();
-
-        return response()->json([
-            'status' => true,
-            'data' => $data,
-            'message' => 'Data dosen berhasil diambil'
-        ], 200);
+        try {
+            $data = DosenPenugasan::where('dosen_id', $id)->get();
+            if ($data->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data dosen tidak ditemukan.'
+                ], 404);
+            }
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => 'Data dosen berhasil diambil'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan saat mengambil data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     public function store(DosenPenugasanRequest $request) // Use the custom request
@@ -41,14 +50,28 @@ class DosenPenugasanController extends Controller
             ], 500);
         }
     }
-
-    public function updateByDosenId(DosenPenugasanRequest $request, $id) // Use the custom request
+    public function show($id)
     {
         try {
-            $data = DosenPenugasan::where('dosen_id', $id)->firstOrFail();
-
+            $data = DosenPenugasan::findOrFail($id);
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => 'Data dosen berhasil diambil'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan saat mengambil data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function update(DosenPenugasanRequest $request, $id) // Use the custom request
+    {
+        try {
+            $data = DosenPenugasan::findOrFail($id);
             $data->update($request->validated());
-
             return response()->json([
                 'status' => true,
                 'data' => $data,
@@ -66,9 +89,8 @@ class DosenPenugasanController extends Controller
     public function destroy($id)
     {
         try {
-            $data = DosenPenugasan::where('dosen_id', $id)->firstOrFail();
+            $data = DosenPenugasan::findOrFail($id);
             $data->delete();
-
             return response()->json([
                 'status' => true,
                 'pesan' => 'Data berhasil dihapus.',

@@ -25,7 +25,7 @@ class MahasiswaController extends Controller
                     })
                         ->orWhere('nim', 'LIKE', "%{$search}%");
                 })
-                ->with(['biodata', 'prodi.fakultas'])
+                ->with(['biodata', 'prodi.fakultas', 'jalurMasuk'])
                 ->paginate($paging);
 
             return response()->json([

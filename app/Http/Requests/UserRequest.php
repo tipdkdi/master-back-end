@@ -24,8 +24,10 @@ class UserRequest extends FormRequest
         return [
             //validasi user
             'name' => 'required|string|max:255',
+            'google_id' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
+            'photo' => 'required|string',
         ];
     }
 }

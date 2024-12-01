@@ -51,17 +51,15 @@ class MahasiswaOrtuController extends Controller
     }
 
     // Update: Update Ortu record
-    public function updateByMahasiswaId(MahasiswaOrtuRequest $request, $id)
+    public function update(MahasiswaOrtuRequest $request, $id)
     {
         try {
-            // $ortu = MahasiswaOrangTua::findOrFail($mahasiswa_id);
-            $ortu = MahasiswaOrangTua::where('mahasiswa_id', $id)->firstOrFail();
-
-            $ortu->update($request->validated());
+            $data = MahasiswaOrangTua::findOrFail($id);
+            $data->update($request->validated());
 
             return response()->json([
                 'status' => true,
-                'data' => $ortu,
+                'data' => $data,
                 'pesan' => 'Data berhasil diupdate.',
             ], 200);
         } catch (\Exception $e) {

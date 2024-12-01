@@ -12,37 +12,24 @@ class OrganisasiController extends Controller
     public function index(Request $request)
     {
         try {
-            // $grup = $request->input('grup');
-            // $parent = $request->input('parent_id');
-            // $query = Organisasi::query();
+            $grup = $request->input('grup', 'semua'); //Menampilkan berdasarkan grup, misalnya semua yang memiliki grup prodi
+            $parent = $request->input('parent_id'); //menampilkan berdasarkan parent_id, misalnya mau menampilkan semua prodi di fakultas FATIK
+            $query = Organisasi::query();
 
-            // if ($grup) {
-            //     // Menyaring berdasarkan grup_flag dari relasi grup
-            //     $query->whereHas('grup', function ($query) use ($grup) {
-            //         $query->where('grup_flag', $grup);
-            //     });
-            // }
-            // if ($parent) {
-            //     // Menyaring berdasarkan grup_flag dari relasi grup
-            //     $query->where('parent_id', $parent);
-            // }
-
-            // // Memuat relasi grup dan mengambil hasil paginated
-            // $data = $query->with('grup')->paginate(25);
-
-            $grup = $request->input('grup', 'semua');
-            $parent = $request->input('parent_id');
-            $id = $request->input('id');
             if ($grup)
-                $data = OrganisasiGrup::where('grup_flag', $grup)->with('organisasi')->get();
+                // $data = OrganisasiGrup::where('grup_flag', $grup)->with('organisasi')->get();
+                // ->with('grup', function ($grupQuery) use ($grup) {
+                //     $grupQuery->where('grup_flag', $grup);
+                // })
+                $query->whereHas('grup', function ($grupQuery) use ($grup) {
+                    $grupQuery->where('grup_flag', $grup);
+                });
             if ($parent)
-                $data = Organisasi::where('parent_id', $parent)->get();
-            if ($id)
-                $data = Organisasi::with(['grup'])->find($id);
+                $query->where('parent_id', $parent);
             // if ($child == "yes")
             //     $query->with('organisasi.child');
             // $data = $query->get();
-
+            $data = $query->get();
             return response()->json([
                 'status' => true,
                 'data' => $data,
@@ -62,6 +49,24 @@ class OrganisasiController extends Controller
     {
         try {
             $data = Organisasi::create($request->validated());
+
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'pesan' => 'Data berhasil disimpan.',
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan saat menyimpan data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+    public function show($id) // Use the custom request
+    {
+        try {
+            $data = Organisasi::findOrFail($id);
 
             return response()->json([
                 'status' => true,

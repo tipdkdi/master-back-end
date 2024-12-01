@@ -35,7 +35,23 @@ class DosenController extends Controller
             ], 500);
         }
     }
-
+    public function show($id)
+    {
+        try {
+            $data = Dosen::findOrFail($id);
+            return response()->json([
+                'status' => true,
+                'data' => $data,
+                'message' => 'Data dosen berhasil diambil'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'pesan' => 'Terjadi kesalahan saat mengambil data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
     public function update(DosenRequest $request, $id) // Use the custom request
     {
         try {
@@ -56,12 +72,11 @@ class DosenController extends Controller
             ], 500);
         }
     }
-
     public function destroy($id)
     {
         try {
-            $jalurMasuk = Dosen::findOrFail($id);
-            $jalurMasuk->delete();
+            $data = Dosen::findOrFail($id);
+            $data->delete();
 
             return response()->json([
                 'status' => true,

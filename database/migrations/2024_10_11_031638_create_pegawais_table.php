@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('idpeg', 100);
             $table->string('pegawai_nomor_induk', 100);
+            $table->string('gelar_depan', 100);
+            $table->string('gelar_belakang', 100);
 
             $table->unsignedBigInteger('biodata_id');
             $table->foreign('biodata_id')->references('id')->on('biodatas')->onDelete('cascade');
