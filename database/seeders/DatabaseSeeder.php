@@ -74,11 +74,13 @@ class DatabaseSeeder extends Seeder
                 'name' => 'super_admin',
                 'email' => 'super_admin@iainkendari.ac.id',
                 'password' => bcrypt('1234qwer'),
+                'foto' => '/foto',
             ],
             [
                 'name' => 'Eko Wahyu',
                 'email' => 'ewp@iainkendari.ac.id',
                 'password' => bcrypt('1234qwer'),
+                'foto' => '/foto',
             ]
         ]);
         DB::table('user_biodatas')->insert([
