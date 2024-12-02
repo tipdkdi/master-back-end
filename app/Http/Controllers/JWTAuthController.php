@@ -20,7 +20,6 @@ class JWTAuthController extends Controller
     public function callbackGoogle() //google mengarahkan ke sini ketika login google berhasil
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
-        dd($googleUser);
         // Simpan atau update user
         $user = User::updateOrCreate(
             ['email' => $googleUser->email],
@@ -31,16 +30,10 @@ class JWTAuthController extends Controller
                 'photo' => $googleUser->avatar,
             ]
         );
-
         // Generate JWT token
         $token = JWTAuth::fromUser($user);
+        return $token;
         return redirect('https://portal.iainkendari.ac.id/token/' . $token);
-        // Return token ke aplikasi frontend
-        // return response()->json([
-        //     'message' => 'Login berhasil',
-        //     'token' => $token,
-        //     'user' => $user,
-        // ]);
     }
 
     public function validateToken() //fungsi untuk validasi token
