@@ -33,7 +33,7 @@ class JWTAuthController extends Controller
         // Generate JWT token
         $token = JWTAuth::fromUser($user);
         return $token;
-        return redirect('https://portal.iainkendari.ac.id/token/' . $token);
+        return redirect('https://super-app.iainkendari.ac.id/token/' . $token);
     }
 
     public function validateToken() //fungsi untuk validasi token
@@ -85,5 +85,29 @@ class JWTAuthController extends Controller
         } catch (JWTException $e) {
             return response()->json(['error' => 'Could not create token'], 500);
         }
+    }
+
+    public function getRole(Request $request)
+    {
+        // Ambil payload dari token
+        $payload = JWTAuth::getPayload();
+
+        // Ambil 'sub' (user ID) dari payload
+        $userId = $payload->get('sub');
+
+        $user = User::with('userRoles.role')->find($userId);
+        // return $user;
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        $status = true;
+        $pesan = "Data Role Berhasil diambil";
+        $grup = UserRoleResource::collection($user->userRoles);
+        return response()->json(compact('status', 'pesan', 'grup'));
+
+        // return response()->json('role'=>[
+        //     'user_id' => $user->id,
+        //     'roles' => UserRoleResource::collection($user->userRoles),
+        // ]);
     }
 }
