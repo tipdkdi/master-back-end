@@ -27,7 +27,7 @@ class JWTAuthController extends Controller
                 'name' => $googleUser->name,
                 'google_id' => $googleUser->id,
                 'password' => bcrypt('1234qwer'),
-                'photo' => $googleUser->avatar,
+                'foto' => $googleUser->avatar,
             ]
         );
         // Generate JWT token
