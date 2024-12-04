@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\MahasiswaController;
@@ -16,12 +15,21 @@ use App\Http\Controllers\GrupJabatanController;
 use App\Http\Controllers\OrganisasiPejabatController;
 use App\Http\Controllers\LainnyaController;
 use App\Http\Middleware\JwtMiddleware;
-use Laravel\Socialite\Facades\Socialite;
 
 Route::post('login', [JWTAuthController::class, 'login']);
 Route::post('validate-token', [JWTAuthController::class, 'validateToken']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
+
+    Route::get('/validate-token', function (Request $request) {
+        return response()->json([
+            'message' => 'Token valid',
+            'user' => auth()->user(), // Mendapatkan data user dari token
+        ]);
+    });
+
+    Route::get('get-role', [JWTAuthController::class, 'getRole']);
+
     Route::resource('mahasiswa', MahasiswaController::class)->parameters([
         'mahasiswa' => 'mahasiswa_id'
     ]);
@@ -83,7 +91,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::delete('pejabat/{id}', [OrganisasiPejabatController::class, 'destroy'])->name('pejabat.destroy');
 
 
-    Route::get('get-role', [JWTAuthController::class, 'getRole']);
+    Route::get('is-roled', [LainnyaController::class, 'is_roled']);
     Route::get('status-asn', [LainnyaController::class, 'statusAsn'])->name('status.asn');
     Route::get('kategori-pegawai', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
     Route::get('master-jabatan', [LainnyaController::class, 'masterJabatan'])->name('kategori.pegawai');
