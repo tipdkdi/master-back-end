@@ -47,12 +47,18 @@ class JWTAuthController extends Controller
             $user = Auth::guard('api')->user();
 
             if (!$user) {
-                return response()->json(['error' => 'Token tidak valid'], 401);
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Token tidak valid',
+                    'data' => $user,
+                ]);
+                // return response()->json(['error' => 'Token tidak valid'], 401);
             }
 
             return response()->json([
+                'status' => true,
                 'message' => 'Token valid',
-                'user' => $user,
+                'data' => $user,
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => 'Token tidak valid atau expired'], 401);
