@@ -94,7 +94,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::delete('pejabat/{id}', [OrganisasiPejabatController::class, 'destroy'])->name('pejabat.destroy');
 
 
-    Route::get('is-roled', [LainnyaController::class, 'is_roled']);
+    Route::get('cek-role', [LainnyaController::class, 'is_roled']);
     Route::get('status-asn', [LainnyaController::class, 'statusAsn'])->name('status.asn');
     Route::get('kategori-pegawai', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
     Route::get('master-jabatan', [LainnyaController::class, 'masterJabatan'])->name('kategori.pegawai');
