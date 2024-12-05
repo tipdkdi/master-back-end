@@ -99,4 +99,5 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('kategori-pegawai', [LainnyaController::class, 'kategoriPegawai'])->name('kategori.pegawai');
     Route::get('master-jabatan', [LainnyaController::class, 'masterJabatan'])->name('kategori.pegawai');
     // Route::get('decrypt', [LainnyaController::class, 'decrypt'])->name('decrypt');
+    Route::post('logout', [JWTAuthController::class, 'logout']);
 });

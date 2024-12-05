@@ -11,6 +11,7 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
 use App\Http\Resources\UserRoleResource;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
 
 class JWTAuthController extends Controller
@@ -52,7 +53,6 @@ class JWTAuthController extends Controller
                     'message' => 'Token tidak valid',
                     'data' => $user,
                 ]);
-                // return response()->json(['error' => 'Token tidak valid'], 401);
             }
 
             return response()->json([
@@ -119,5 +119,22 @@ class JWTAuthController extends Controller
         //     'user_id' => $user->id,
         //     'roles' => UserRoleResource::collection($user->userRoles),
         // ]);
+    }
+
+    public function logout(Request $request)
+    {
+        $token = auth()->guard('api')->getToken();
+        auth()->guard('api')->logout();
+
+        JWTAuth::invalidate($token);
+
+        // Kirim permintaan ke backend domain lain
+        $apps = ['spmb'];
+        foreach ($apps as $app)
+            Http::withHeaders([
+                'Authorization' => 'Bearer ' . $token,  // Mengirim Bearer token di header
+            ])->post('https:api.iainkendari.ac.id/' . $app . '/logout');
+
+        return response()->json(['message' => 'Logged out successfully']);
     }
 }
