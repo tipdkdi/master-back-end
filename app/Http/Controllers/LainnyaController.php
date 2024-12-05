@@ -49,7 +49,7 @@ class LainnyaController extends Controller
             // Ambil 'sub' (user ID) dari payload
             $userId = $payload->get('sub');
 
-            $user = UserRole::where('user_id', $userId)->first();
+            $user = UserRole::where('user_id', $userId)->with('role')->first();
             // return $user;
             if (!$user) {
                 $status = false;
@@ -58,8 +58,11 @@ class LainnyaController extends Controller
             }
             $status = true;
             $pesan = "Anda memiliki role di aplikasi ini. silahkan lanjut";
-            $link = route('https://super-app.iainkendari.ac.id/dashboard');
-            return response()->json(compact('status', 'pesan'));
+            $data['nama_aplikasi'] = 'Admin Master';
+            $data['link'] = 'https://super-app.iainkendari.ac.id/dashboard';
+            $data['logo'] = 'https://iainkendari.ac.id/images/logoweb.png';
+            $data['roles'] = $user->role;
+            return response()->json(compact('status', 'pesan', 'data'));
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
