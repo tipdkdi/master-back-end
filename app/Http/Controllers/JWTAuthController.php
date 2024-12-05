@@ -133,7 +133,7 @@ class JWTAuthController extends Controller
         foreach ($apps as $app)
             Http::withHeaders([
                 'Authorization' => 'Bearer ' . $token,  // Mengirim Bearer token di header
-            ])->post('https:api.iainkendari.ac.id/' . $app . '/logout');
+            ])->post('https://api.iainkendari.ac.id/' . $app . '/logout');
 
         return response()->json(['message' => 'Logged out successfully']);
     }
