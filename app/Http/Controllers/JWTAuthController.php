@@ -38,7 +38,7 @@ class JWTAuthController extends Controller
             return "Email Tidak terdaftar. Hubungi Admin Kampus";
         $token = JWTAuth::fromUser($user);
         // return $token;
-        return redirect('https://super-app.iainkendari.ac.id/token/' . $token);
+        return redirect('https://super-app.iainkendari.ac.id/auth/' . $token);
     }
 
     public function validateToken() //fungsi untuk validasi token
