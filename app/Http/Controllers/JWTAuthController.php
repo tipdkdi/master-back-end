@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserLoginResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -21,18 +22,21 @@ class JWTAuthController extends Controller
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
         // Simpan atau update user
-        $user = User::updateOrCreate(
-            ['email' => $googleUser->email],
-            [
-                'name' => $googleUser->name,
-                'google_id' => $googleUser->id,
-                'password' => bcrypt('1234qwer'),
-                'foto' => $googleUser->avatar,
-            ]
-        );
-        // Generate JWT token
+        // $user = User::updateOrCreate(
+        //     ['email' => $googleUser->email],
+        //     [
+        //         'name' => $googleUser->name,
+        //         'google_id' => $googleUser->id,
+        //         'password' => bcrypt('1234qwer'),
+        //         'foto' => $googleUser->avatar,
+        //     ]
+        // );
+        $user = User::where('email', $googleUser->email)
+            ->first();
+        if (!$user)
+            return "Email Tidak terdaftar. Hubungi Admin Kampus";
         $token = JWTAuth::fromUser($user);
-        return $token;
+        // return $token;
         return redirect('https://super-app.iainkendari.ac.id/token/' . $token);
     }
 

@@ -5,7 +5,10 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
-    return view('welcome');
+    return "Selamat Datang di Web Service Maste ";
+});
+Route::get('/import-pegawai', function () {
+    return view('import-pegawai');
 });
 Route::get('/login/google', function () {
     return Socialite::driver('google')->redirect();

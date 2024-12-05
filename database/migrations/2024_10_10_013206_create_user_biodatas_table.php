@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->unsignedBigInteger('biodata_id');
             $table->foreign('biodata_id')->references('id')->on('biodatas');
+            $table->enum('jenis', ['mahasiswa', 'pegawai']);
 
             $table->timestamps();
         });

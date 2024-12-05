@@ -99,53 +99,9 @@ class DatabaseSeeder extends Seeder
                 'keterangan' => '',
             ],
             [
-                'role_nama' => 'Administrator SPMB',
+                'role_nama' => 'Administrator Kepegawaian',
                 'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Mahasiswa',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Pegawai',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Panitia SPMB',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Verifikator UKT',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Admin PNBP',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Admin Akademik',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Admin Prodi',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Dosen',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Kaprodi',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Dekan',
-                'keterangan' => '',
-            ],
-            [
-                'role_nama' => 'Admin PDDIKTI',
-                'keterangan' => '',
-            ],
+            ]
         ]);
 
         DB::table('user_roles')->insert([

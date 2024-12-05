@@ -12,12 +12,14 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\DosenPenugasanController;
 use App\Http\Controllers\GrupJabatanController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OrganisasiPejabatController;
 use App\Http\Controllers\LainnyaController;
 use App\Http\Middleware\JwtMiddleware;
 
 Route::post('login', [JWTAuthController::class, 'login']);
 Route::post('validate-token', [JWTAuthController::class, 'validateToken']);
+Route::post('import-pegawai', [ImportController::class, 'importPegawai'])->name('import.pegawai');
 
 Route::middleware([JwtMiddleware::class])->group(function () {
 
@@ -28,6 +30,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         ]);
     });
 
+    Route::get('get-user-info', [LainnyaController::class, 'getUserInfo']);
     Route::get('get-role', [JWTAuthController::class, 'getRole']);
 
     Route::resource('mahasiswa', MahasiswaController::class)->parameters([

@@ -11,6 +11,7 @@ class UserBiodata extends Model
     protected $fillable = [
         'user_id',
         'biodata_id',
+        'jenis',
     ];
 
     public function user()
@@ -21,4 +22,14 @@ class UserBiodata extends Model
     {
         return $this->belongsTo('App\Models\Biodata');
     }
+    // public function biodata()
+    // {
+    //     if ($this->jenis == 'pegawai') {
+    //         return $this->belongsTo('App\Models\Pegawai', 'biodata_id');
+    //     } elseif ($this->jenis == 'mahasiswa') {
+    //         return $this->belongsTo('App\Models\Mahasiswa', 'biodata_id');
+    //     }
+
+    //     // Jika ada jenis lain, tambahkan kondisi lain di sini
+    // }
 }
