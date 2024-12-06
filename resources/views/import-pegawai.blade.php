@@ -52,6 +52,7 @@
             // console.log(item);
             // return console.log('ggwp');
             let url = "{{route('import.pegawai')}}";
+            url = url.replace('http', 'https')
             let dataSend = new FormData()
             // let token = "token"
             dataSend.append('data', JSON.stringify(data))
